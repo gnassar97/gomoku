@@ -1,0 +1,28 @@
+Some pseudocode for end conditions:
+
+#Checking column
+	loop:
+	#board has [x][y] coordinates
+	#so for column
+	for col = 0; col < n; col++:			#n = size of board
+		if(board[x][col] != currentColor):
+			break;
+		if(i == 5):
+			return True #For current state(Color)
+
+	#Similar code for row
+	for row = 0; col < n; row++:
+		if(board[row][y] != currentColor):
+			break;
+		if(i == 5):
+			return True #For current state(Color)
+	
+	#For Diagonal:
+	if(x == y) #Both board coordinates (1,1) (2,2) (3,3) .. jist of it. Diagonal
+		for(int i = 0; i<n; i++):	#n = size of board.
+		if(board[i][i] != currentColor):
+			break;
+		else win for current state.
+
+	
+	
