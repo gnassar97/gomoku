@@ -241,14 +241,21 @@ class GtpConnection():
             board_color = args[0].lower()
             board_move = args[1]
             color = color_to_int(board_color)
+            last_color = GoBoardUtil.opponent(color)
             if args[1].lower() == 'pass':
                 self.board.play_move(PASS, color)
                 self.board.current_player = GoBoardUtil.opponent(color)
                 self.respond()
                 return
-            coord = move_to_coord(args[1], self.board.size)
-            if coord:
-                move = coord_to_point(coord[0],coord[1], self.board.size)
+            if self.board.current_player != last_color:
+            	coord = move_to_coord(args[1], self.board.size)
+            	if coord:
+            		move = coord_to_point(coord[0],coord[1], self.board.size)
+            	last_color = self.board.current_player 
+            #else:
+            	#self.respond("Illegal Move!! Black must go first, and then turns alternate.")
+            	#return
+            	               
             else:
                 self.error("Error executing move {} converted from {}"
                            .format(move, args[1]))
@@ -261,7 +268,10 @@ class GtpConnection():
                                 format(board_move, self.board2d()))
             self.respond()
         except Exception as e:
-            self.respond('Error: {}'.format(str(e)))
+            self.respond('Error penis: {}'.format(str(e)))
+            # THIS LINE RIGHT HERE IS MY ISSUE, I have no idea how they're handling errors.
+            # The good news is it's checking for input errors in the right order, like they specify in the assignment. Now just need it to print specifically what happened
+            # it's checking for color> then coordinate > then occupied
 
     def genmove_cmd(self, args):
         """ Modify this function for Assignment 1 """
