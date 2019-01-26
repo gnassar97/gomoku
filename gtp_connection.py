@@ -253,7 +253,7 @@ class GtpConnection():
             		move = coord_to_point(coord[0],coord[1], self.board.size)
             	last_color = self.board.current_player 
             else:
-            	self.respond("Illegal Move!! Black must go first, and then turns alternate.")
+            	self.respond("Illegal Move. Black must go first, and then turns alternate.")
             	return
             	               
             #else:
@@ -278,9 +278,13 @@ class GtpConnection():
         """ generate a move for color args[0] in {'b','w'} """
         board_color = args[0].lower()
         color = color_to_int(board_color)
+        #print("test before")
         move = self.go_engine.get_move(self.board, color)
+        #print("test after" + str(move))
         move_coord = point_to_coord(move, self.board.size)
+        #print("test here as well" + str(move_coord))
         move_as_string = format_point(move_coord)
+        #print("test here last" + str(move_as_string))
         if self.board.is_legal(move, color):
             self.board.play_move(move, color)
             self.respond(move_as_string)
@@ -350,6 +354,8 @@ def format_point(move):
     Return move coordinates as a string such as 'a1', or 'pass'.
     """
     column_letters = "abcdefghjklmnopqrstuvwxyz"
+    if move == None:
+        return "Opponent's turn."
     if move == PASS:
         return "pass"
     row, col = move

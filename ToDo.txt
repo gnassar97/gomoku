@@ -1,4 +1,4 @@
-Specify errors for placing gomoku stones (ALMOST DONE, it checks properly now, just not sure if its the correct syntax)
+Specify errors for placing gomoku stones (DONE)
 	Wrong color>Wrong coord>Occupied space
 Complete gogui-rules_legal_moves command
 	if game over>return empty list
@@ -10,7 +10,7 @@ Complete gogui-rules_final_result command
 	else unknown returned
 	Note: This already returns unknown
 Complete assignment specifications for end of game (genmove)
-	if game not over> play a random move
+	if game not over> play a random move DONE
 	if game over b/c opponent won> resign
 	if game over b/c board full> pass
 

@@ -171,13 +171,19 @@ class SimpleGoBoard(object):
             #self.ko_recapture = None
             #self.current_player = GoBoardUtil.opponent(color)
             #return True
+        oppColor = GoBoardUtil.opponent(color)
+        #print(str(self.current_player))
+        #print(str(oppColor))
+        if self.current_player == oppColor:
+            return False
         if self.board[point] != EMPTY:
             return False
+
         #if point == self.ko_recapture:
             #return False
             
         # General case: deal with captures, suicide, and next ko point
-        oppColor = GoBoardUtil.opponent(color)
+
         #in_enemy_eye = self._is_surrounded(point, oppColor)
         self.board[point] = color
         #single_captures = []
