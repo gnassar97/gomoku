@@ -252,14 +252,14 @@ class GtpConnection():
             	if coord:
             		move = coord_to_point(coord[0],coord[1], self.board.size)
             	last_color = self.board.current_player 
-            #else:
-            	#self.respond("Illegal Move!! Black must go first, and then turns alternate.")
-            	#return
-            	               
             else:
-                self.error("Error executing move {} converted from {}"
-                           .format(move, args[1]))
-                return
+            	self.respond("Illegal Move!! Black must go first, and then turns alternate.")
+            	return
+            	               
+            #else:
+                #self.error("Error executing move {} converted from {}"
+                           #.format(move, args[1]))
+                #return
             if not self.board.play_move(move, color):
                 self.respond("Illegal Move: {}".format(board_move))
                 return
@@ -268,7 +268,7 @@ class GtpConnection():
                                 format(board_move, self.board2d()))
             self.respond()
         except Exception as e:
-            self.respond('Error penis: {}'.format(str(e)))
+            self.respond('Error (Line 271): {}'.format(str(e)))
             # THIS LINE RIGHT HERE IS MY ISSUE, I have no idea how they're handling errors.
             # The good news is it's checking for input errors in the right order, like they specify in the assignment. Now just need it to print specifically what happened
             # it's checking for color> then coordinate > then occupied

@@ -1,4 +1,4 @@
-Specify errors for placing gomoku stones
+Specify errors for placing gomoku stones (ALMOST DONE, it checks properly now, just not sure if its the correct syntax)
 	Wrong color>Wrong coord>Occupied space
 Complete gogui-rules_legal_moves command
 	if game over>return empty list
