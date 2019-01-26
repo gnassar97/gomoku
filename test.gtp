@@ -1,0 +1,7 @@
+boardsize 2
+clear_board
+play B B2
+play W B1
+play B A1
+play W A2
+gogui-rules_legal_moves
