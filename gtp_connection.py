@@ -309,6 +309,7 @@ class GtpConnection():
         move_coord = point_to_coord(move, self.board.size)
         #print("test here as well" + str(move_coord))
         move_as_string = format_point(move_coord)
+        print(str(self.board.get_empty_points()))
         #print("test here last" + str(move_as_string))
         if self.board.is_legal(move, color):
             self.board.play_move(move, color)
