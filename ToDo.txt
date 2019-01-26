@@ -1,0 +1,17 @@
+Specify errors for placing gomoku stones
+	Wrong color>Wrong coord>Occupied space
+Complete gogui-rules_legal_moves command
+	if game over>return empty list
+	else> return list of all empty points
+	Note: This already returns empty list
+Complete checks for win horizontal/vertical/diagonal
+Complete gogui-rules_final_result command
+	if game over> black/white/draw wins
+	else unknown returned
+	Note: This already returns unknown
+Complete assignment specifications for end of game (genmove)
+	if game not over> play a random move
+	if game over b/c opponent won> resign
+	if game over b/c board full> pass
+
+Execute tests and make log file
