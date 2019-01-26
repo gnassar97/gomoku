@@ -4,6 +4,7 @@
 
 # Set up relative path for util
 # sys.path[0] is the directory of the current program
+import re
 import sys
 utilpath = sys.path[0] + "/../util/"
 sys.path.append(utilpath)

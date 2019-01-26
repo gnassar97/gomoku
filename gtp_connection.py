@@ -192,6 +192,7 @@ class GtpConnection():
 
     def gogui_rules_game_id_cmd(self, args):
         """ We already implemented this function for Assignment 1 """
+        print("Gomoku")
         self.respond("Gomoku")
 
     def gogui_rules_board_size_cmd(self, args):
@@ -200,6 +201,10 @@ class GtpConnection():
 
     def gogui_rules_legal_moves_cmd(self, args):
         """ Implement this function for Assignment 1 """
+        #Psuedocode - Forloop2x iterate over each board pos;
+        #Find if it's occupied or not (Black/White)
+        #Add to a list.
+        #Return sorted list.
         self.respond()
         return
 
