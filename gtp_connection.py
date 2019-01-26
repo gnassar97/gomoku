@@ -174,6 +174,7 @@ class GtpConnection():
         self.reset(int(args[0]))
         self.respond()
 
+
     """
     ==========================================================================
     Assignment 1 - game-specific commands start here
@@ -205,8 +206,27 @@ class GtpConnection():
         #Find if it's occupied or not (Black/White)
         #Add to a list.
         #Return sorted list.
-        self.respond()
-        return
+        output = ''
+
+        if(self.gogui_rules_final_result_cmd != 'unknown'):
+            size = self.board.size
+            string = ''
+            for row in range(size-1, -1, -1):
+                start = self.board.row_start(row + 1)
+                for i in range(size):
+                    #str += '.'
+                    point = self.board.board[start + i]
+                    if point == EMPTY:
+                        string = string + " " + str(chr(row+96+1)) +str(i+1) 
+            string = string.split(" ")
+            string = sorted(string)
+            
+            for i in string:
+                output = output + i + " "
+        
+        self.respond(output)
+
+        
 
     def gogui_rules_side_to_move_cmd(self, args):
         """ We already implemented this function for Assignment 1 """
@@ -289,6 +309,7 @@ class GtpConnection():
         move_coord = point_to_coord(move, self.board.size)
         #print("test here as well" + str(move_coord))
         move_as_string = format_point(move_coord)
+        print(str(self.board.get_empty_points()))
         #print("test here last" + str(move_as_string))
         if self.board.is_legal(move, color):
             self.board.play_move(move, color)
