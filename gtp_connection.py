@@ -255,7 +255,41 @@ class GtpConnection():
             
     def gogui_rules_final_result_cmd(self, args):
         """ Implement this function for Assignment 1 """
-        self.respond("unknown")
+        size = self.board.size    #Returns 5
+        string = ''
+        result = 'unknown'
+        count = 1
+        #BUILD STRING OF 1D ARRAY  (DONE)
+        for row in range(size-1, -1, -1):
+            start = self.board.row_start(row + 1)
+            for i in range(size):
+                    #str += '.'
+                point = self.board.board[start + i]
+                if point == BLACK:
+                  string = string + "X"
+                if point == WHITE:
+                  string = string + "O"
+                if point == EMPTY:
+                  string = string + "."
+        stringCol = string
+        #Let's try out COL WIN first.  (ITERATE BY 5)        
+        for i in range(len(string)):
+            if(i == 0):
+                continue
+            if i+(size*4)  <= size*size:
+                for j in range(i,size*size,size):
+                    if count == 5:
+                        if string[i] == "X":
+                            result = 'Black'
+                        if string[i] == "O":
+                            result = 'White'
+                        break
+                    if string[i] == string[i+size]:
+                        count = count + 1
+                    if string[i] != string[i+size]:
+                        count = 0
+                    
+        self.respond(result)
 
     def play_cmd(self, args):
         """ Modify this function for Assignment 1 """
