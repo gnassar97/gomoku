@@ -1,11 +1,11 @@
 size = 5
 count = 1
-string = 'X...XOXOO..OOOOOXXOX.OX..'
+string = 'X...XOXOOXOOOOOXXXOX.OX..'
 result = 'unknown'
 
 for i in range(len(string)):
     if (string[i] == 'X' or string[i] == "O"):
-        if(i+5 <= size*size):
+        if(i+4 <= size*size -1 and i%size + 4 <  size):
             for j in range(i,i+size,1):
                 print(count, string[i])
                 if(count == 5):
