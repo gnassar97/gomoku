@@ -6,6 +6,7 @@ Parts of this code were originally based on the gtp module
 in the Deep-Go project by Isaac Henrion and Amos Storkey 
 at the University of Edinburgh.
 """
+import re
 import traceback
 from sys import stdin, stdout, stderr
 from board_util import GoBoardUtil, BLACK, WHITE, EMPTY, BORDER, PASS, \
@@ -255,8 +256,111 @@ class GtpConnection():
             
     def gogui_rules_final_result_cmd(self, args):
         """ Implement this function for Assignment 1 """
-        self.respond("unknown")
-
+        size = self.board.size    #Returns 5
+        string = ''
+        result = 'unknown'
+        count = 1
+        #BUILD STRING OF 1D ARRAY  (DONE)
+        for row in range(size-1, -1, -1):
+            start = self.board.row_start(row + 1)
+            for i in range(size):
+                    #str += '.'
+                point = self.board.board[start + i]
+                if point == BLACK:
+                  string = string + "X"
+                if point == WHITE:
+                  string = string + "O"
+                if point == EMPTY:
+                  string = string + "."        
+        #Let's try out COL WIN first.  (ITERATE BY 5)        
+        for i in range(len(string)):
+            if i + size*4 < size*size-1:
+                if(string[i] == 'X' or string[i] == 'O'):
+                    for j in range(i+size, i+size*5,size):
+                        print(count, "COL")
+                        if count == 5:
+                            if string[i] == "X":
+                                result = 'Black'
+                                self.respond(result)
+                                return
+                            if string[i] == "O":
+                                result = 'White'
+                                self.respond(result)
+                                return
+                            break
+                        if (string[i] == string[j]):
+                            count = count + 1
+                    count = 1
+        ##ROW TEST                
+        for i in range(len(string)):
+            if (string[i] == 'X' or string[i] == "O"):
+                if(i+4 < size*size -1 and i%size + 4 <  size):
+                    for j in range(i+1,i+5,1):
+                        print(j, i)
+                        print(count, "ROW")
+                        if(count == 5):
+                            if string[i] == "X":
+                                result = 'Black'
+                                self.respond(result)
+                                return
+                            if string[i] == "O":
+                                result = 'White'
+                                self.respond(result)
+                                return
+                            break
+                        if(string[i] == string[j]):
+                            count = count + 1
+                    count = 1        
+        #DIAG TEST         
+        for i in range(len(string)):
+            if (string[i] == 'X' or string[i] == "O"):
+                if(i+(4*(size+1)) <= size*size-1):
+                   
+                    for j in range(i,i+5*(size+1),size+1):
+                        print("DIAG", count)
+                        if(count == 5):
+                            print(count)
+                            if string[i] == "X":
+                                result = 'Black'
+                                self.respond(result)
+                                return
+                            if string[i] == "O":
+                                result = 'White'
+                                self.respond(result)
+                                return
+                            break
+                        if(string[i] == string[j]):
+                            count = count + 1
+                    count = 1
+        #ANTI-DIAG TEST.
+        for i in range(len(string)):
+            
+            if (string[i] == 'X' or string[i] == "O"):
+                if(i+(4*(size-1)) <= size*size-1):
+                    for j in range(i,i+5*(size-1),size-1):
+                        print("AD", count)
+                        if(count == 5):
+                            if string[i] == "X":
+                                result = 'Black'
+                                self.respond(result)
+                                return
+                            if string[i] == "O":
+                                result = 'White'
+                                self.respond(result)
+                                return
+                            break
+                        if(string[i] == string[j]):
+                            count = count + 1
+                    count = 1
+        #DRAW--
+        if "." in string:
+            result = 'unknown'
+            self.respond(result)
+            return
+        else:
+            result = 'DRAW'    
+            self.respond(result)
+            return
     def play_cmd(self, args):
         """ Modify this function for Assignment 1 """
         """
@@ -267,6 +371,7 @@ class GtpConnection():
             board_move = args[1]
             color = color_to_int(board_color)
             last_color = GoBoardUtil.opponent(color)
+            #No Pass in GOMOKU?
             if args[1].lower() == 'pass':
                 self.board.play_move(PASS, color)
                 self.board.current_player = GoBoardUtil.opponent(color)
