@@ -122,10 +122,9 @@ class GoBoardUtil(object):
         moves = board.get_empty_points()
         np.random.shuffle(moves)
         for move in moves:
-            legal = not (use_eye_filter and board.is_eye(move, color)) \
-                    and board.is_legal(move, color)
-            if legal:
-                return move
+            #legal = not (use_eye_filter and board.is_eye(move, color)) \
+            #        and board.is_legal(move, color)
+            return move
         return PASS
 
     @staticmethod

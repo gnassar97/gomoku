@@ -274,9 +274,10 @@ class GtpConnection():
                   string = string + "."        
         #Let's try out COL WIN first.  (ITERATE BY 5)        
         for i in range(len(string)):
-            if i + size*4 < size*size:
+            if i + size*4 < size*size-1:
                 if(string[i] == 'X' or string[i] == 'O'):
-                    for j in range(i, i+size*5,size):
+                    for j in range(i+size, i+size*5,size):
+                        print(count, "COL")
                         if count == 5:
                             if string[i] == "X":
                                 result = 'Black'
@@ -293,8 +294,10 @@ class GtpConnection():
         ##ROW TEST                
         for i in range(len(string)):
             if (string[i] == 'X' or string[i] == "O"):
-                if(i+4 <= size*size -1 and i%size + 4 <  size):
-                    for j in range(i,i+size,1):
+                if(i+4 < size*size -1 and i%size + 4 <  size):
+                    for j in range(i+1,i+5,1):
+                        print(j, i)
+                        print(count, "ROW")
                         if(count == 5):
                             if string[i] == "X":
                                 result = 'Black'
@@ -308,12 +311,15 @@ class GtpConnection():
                         if(string[i] == string[j]):
                             count = count + 1
                     count = 1        
-        #DIAG TEST            
+        #DIAG TEST         
         for i in range(len(string)):
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+(4*(size+1)) <= size*size-1):
+                   
                     for j in range(i,i+5*(size+1),size+1):
+                        print("DIAG", count)
                         if(count == 5):
+                            print(count)
                             if string[i] == "X":
                                 result = 'Black'
                                 self.respond(result)
@@ -328,9 +334,11 @@ class GtpConnection():
                     count = 1
         #ANTI-DIAG TEST.
         for i in range(len(string)):
+            
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+(4*(size-1)) <= size*size-1):
                     for j in range(i,i+5*(size-1),size-1):
+                        print("AD", count)
                         if(count == 5):
                             if string[i] == "X":
                                 result = 'Black'
@@ -347,9 +355,12 @@ class GtpConnection():
         #DRAW--
         if "." in string:
             result = 'unknown'
+            self.respond(result)
+            return
         else:
             result = 'DRAW'    
-            
+            self.respond(result)
+            return
     def play_cmd(self, args):
         """ Modify this function for Assignment 1 """
         """
