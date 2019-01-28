@@ -210,7 +210,7 @@ class GtpConnection():
         #Return sorted list.
         output = ''
 
-        if(len(self.board.get_empty_points()) != 0):
+        if(len(self.board.get_empty_points()) <= 1):
             size = self.board.size
             string = ''
             for row in range(size-1, -1, -1):
