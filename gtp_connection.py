@@ -210,7 +210,7 @@ class GtpConnection():
         #Return sorted list.
         output = ''
 
-        if(len(self.board.get_empty_points()) != 0):
+        if(len(self.board.get_empty_points()) <= 1):
             size = self.board.size
             string = ''
             for row in range(size-1, -1, -1):
@@ -369,7 +369,7 @@ class GtpConnection():
         """
         try:
             board_color = args[0].lower()
-            board_move = args[1]
+            board_move = args[1].lower()
             color = color_to_int(board_color)
             last_color = GoBoardUtil.opponent(color)
             #No Pass in GOMOKU?
@@ -384,7 +384,7 @@ class GtpConnection():
             		move = coord_to_point(coord[0],coord[1], self.board.size)
             	last_color = self.board.current_player 
             else:
-            	self.respond("Illegal Move. Wrong color.")
+            	self.respond('illegal Move: "{}" wrong color'.format(board_move))
             	return
             	               
             #else:
@@ -392,14 +392,14 @@ class GtpConnection():
                            #.format(move, args[1]))
                 #return
             if not self.board.play_move(move, color):
-                self.respond("Illegal Move: {} occupied".format(board_move))
+                self.respond('illegal move: "{}" occupied'.format(board_move))
                 return
             else:
                 self.debug_msg("Move: {}\nBoard:\n{}\n".
                                 format(board_move, self.board2d()))
             self.respond()
         except Exception as e:
-            self.respond('Illegal Move: Wrong Coordinate')
+            self.respond('illegal move: "{}" wrong coordinate'.format(board_move))
 
     def genmove_cmd(self, args):
         """ Modify this function for Assignment 1 """
@@ -414,7 +414,7 @@ class GtpConnection():
         move_as_string = format_point(move_coord)
         print(str(self.board.get_empty_points()))
         #print("test here last" + str(move_as_string))
-        if self.gogui_rules_final_result_cmd != 'draw':
+        if(len(self.board.get_empty_points()) == 1):
             if self.board.is_legal(move, color):
                 self.board.play_move(move, color)
                 self.respond(move_as_string)
