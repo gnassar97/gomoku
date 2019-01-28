@@ -209,7 +209,7 @@ class GtpConnection():
         #Return sorted list.
         output = ''
 
-        if(self.gogui_rules_final_result_cmd != 'unknown'):
+        if(self.gogui_rules_final_result_cmd == 'unknown'):
             size = self.board.size
             string = ''
             for row in range(size-1, -1, -1):
@@ -280,11 +280,11 @@ class GtpConnection():
                         print(count, "COL")
                         if count == 5:
                             if string[i] == "X":
-                                result = 'Black'
+                                result = 'black'
                                 self.respond(result)
                                 return
                             if string[i] == "O":
-                                result = 'White'
+                                result = 'white'
                                 self.respond(result)
                                 return
                             break
@@ -300,11 +300,11 @@ class GtpConnection():
                         print(count, "ROW")
                         if(count == 5):
                             if string[i] == "X":
-                                result = 'Black'
+                                result = 'black'
                                 self.respond(result)
                                 return
                             if string[i] == "O":
-                                result = 'White'
+                                result = 'white'
                                 self.respond(result)
                                 return
                             break
@@ -321,11 +321,11 @@ class GtpConnection():
                         if(count == 5):
                             print(count)
                             if string[i] == "X":
-                                result = 'Black'
+                                result = 'black'
                                 self.respond(result)
                                 return
                             if string[i] == "O":
-                                result = 'White'
+                                result = 'white'
                                 self.respond(result)
                                 return
                             break
@@ -341,11 +341,11 @@ class GtpConnection():
                         print("AD", count)
                         if(count == 5):
                             if string[i] == "X":
-                                result = 'Black'
+                                result = 'black'
                                 self.respond(result)
                                 return
                             if string[i] == "O":
-                                result = 'White'
+                                result = 'white'
                                 self.respond(result)
                                 return
                             break
