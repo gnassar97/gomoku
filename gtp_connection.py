@@ -270,26 +270,85 @@ class GtpConnection():
                 if point == WHITE:
                   string = string + "O"
                 if point == EMPTY:
-                  string = string + "."
-        stringCol = string
+                  string = string + "."        
         #Let's try out COL WIN first.  (ITERATE BY 5)        
         for i in range(len(string)):
-            if(i == 0):
-                continue
-            if i+(size*4)  <= size*size:
-                for j in range(i,size*size,size):
-                    if count == 5:
-                        if string[i] == "X":
-                            result = 'Black'
-                        if string[i] == "O":
-                            result = 'White'
-                        break
-                    if string[i] == string[i+size]:
-                        count = count + 1
-                    if string[i] != string[i+size]:
-                        count = 0
-                    
-        self.respond(result)
+            if i + size*4 < size*size:
+                if(string[i] == 'X' or string[i] == 'O'):
+                    for j in range(i, i+size*5,size):
+                        if count == 5:
+                            if string[i] == "X":
+                                result = 'Black'
+                                self.respond(result)
+                                return
+                            if string[i] == "O":
+                                result = 'White'
+                                self.respond(result)
+                                return
+                            break
+                        if (string[i] == string[j]):
+                            count = count + 1
+                    count = 1
+        ##ROW TEST                
+        for i in range(len(string)):
+            if (string[i] == 'X' or string[i] == "O"):
+                if(i+4 <= size*size -1 and i%size + 4 <  size):
+                    for j in range(i,i+size,1):
+                        if(count == 5):
+                            if string[i] == "X":
+                                result = 'Black'
+                                self.respond(result)
+                                return
+                            if string[i] == "O":
+                                result = 'White'
+                                self.respond(result)
+                                return
+                            break
+                        if(string[i] == string[j]):
+                            count = count + 1
+                    count = 1        
+        #DIAG TEST            
+        for i in range(len(string)):
+            if (string[i] == 'X' or string[i] == "O"):
+                if(i+(4*(size+1)) <= size*size):
+                    for j in range(i,i+5*(size+1),size+1):
+                        print(j)
+                        print(count, string[i])
+                        if(count == 5):
+                            if string[i] == "X":
+                                result = 'Black'
+                                self.respond(result)
+                                return
+                            if string[i] == "O":
+                                result = 'White'
+                                self.respond(result)
+                                return
+                            break
+                        if(string[i] == string[j]):
+                            count = count + 1
+                    count = 1
+        #ANTI-DIAG TEST.
+        for i in range(len(string)):
+            if (string[i] == 'X' or string[i] == "O"):
+                if(i+(4*(size-1)) <= size*size):
+                    for j in range(i,i+5*(size-1),size-1):
+                        print(j)
+                        print(count, string[j])
+                        if(count == 5):
+                            if string[i] == "X":
+                                result = 'Black'
+                                self.respond(result)
+                                return
+                            if string[i] == "O":
+                                result = 'White'
+                                self.respond(result)
+                                return
+                            break
+                        if(string[i] == string[j]):
+                            count = count + 1
+                    count = 1
+        
+        
 
     def play_cmd(self, args):
         """ Modify this function for Assignment 1 """
