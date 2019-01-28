@@ -6,6 +6,7 @@ Parts of this code were originally based on the gtp module
 in the Deep-Go project by Isaac Henrion and Amos Storkey 
 at the University of Edinburgh.
 """
+import re
 import traceback
 from sys import stdin, stdout, stderr
 from board_util import GoBoardUtil, BLACK, WHITE, EMPTY, BORDER, PASS, \
@@ -310,10 +311,8 @@ class GtpConnection():
         #DIAG TEST            
         for i in range(len(string)):
             if (string[i] == 'X' or string[i] == "O"):
-                if(i+(4*(size+1)) <= size*size):
+                if(i+(4*(size+1)) <= size*size-1):
                     for j in range(i,i+5*(size+1),size+1):
-                        print(j)
-                        print(count, string[i])
                         if(count == 5):
                             if string[i] == "X":
                                 result = 'Black'
@@ -330,10 +329,8 @@ class GtpConnection():
         #ANTI-DIAG TEST.
         for i in range(len(string)):
             if (string[i] == 'X' or string[i] == "O"):
-                if(i+(4*(size-1)) <= size*size):
+                if(i+(4*(size-1)) <= size*size-1):
                     for j in range(i,i+5*(size-1),size-1):
-                        print(j)
-                        print(count, string[j])
                         if(count == 5):
                             if string[i] == "X":
                                 result = 'Black'
@@ -347,9 +344,12 @@ class GtpConnection():
                         if(string[i] == string[j]):
                             count = count + 1
                     count = 1
-        
-        
-
+        #DRAW--
+        if "." in string:
+            result = 'unknown'
+        else:
+            result = 'DRAW'    
+            
     def play_cmd(self, args):
         """ Modify this function for Assignment 1 """
         """
@@ -360,6 +360,7 @@ class GtpConnection():
             board_move = args[1]
             color = color_to_int(board_color)
             last_color = GoBoardUtil.opponent(color)
+            #No Pass in GOMOKU?
             if args[1].lower() == 'pass':
                 self.board.play_move(PASS, color)
                 self.board.current_player = GoBoardUtil.opponent(color)
