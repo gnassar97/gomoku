@@ -416,7 +416,7 @@ class GtpConnection():
         move_as_string = format_point(move_coord)
         print(str(self.board.get_empty_points()))
         #print("test here last" + str(move_as_string))
-        if self.gogui_rules_legal_moves_cmd != '':
+        if self.gogui_rules_final_result_cmd != 'draw':
             if self.board.is_legal(move, color):
                 self.board.play_move(move, color)
                 self.respond(move_as_string)
