@@ -209,7 +209,7 @@ class GtpConnection():
         #Return sorted list.
         output = ''
 
-        if(self.gogui_rules_final_result_cmd != 'unknown'):
+        if(self.gogui_rules_final_result_cmd == 'unknown'):
             size = self.board.size
             string = ''
             for row in range(size-1, -1, -1):
@@ -281,11 +281,11 @@ class GtpConnection():
                         print(count, "COL")
                         if count == 5:
                             if string[i] == "X":
-                                result = 'Black'
+                                result = 'black'
                                 self.respond(result)
                                 return
                             if string[i] == "O":
-                                result = 'White'
+                                result = 'white'
                                 self.respond(result)
                                 return
                             break
@@ -301,11 +301,11 @@ class GtpConnection():
                         print(count, "ROW")
                         if(count == 5):
                             if string[i] == "X":
-                                result = 'Black'
+                                result = 'black'
                                 self.respond(result)
                                 return
                             if string[i] == "O":
-                                result = 'White'
+                                result = 'white'
                                 self.respond(result)
                                 return
                             break
@@ -321,11 +321,11 @@ class GtpConnection():
                         if(count == 5):
                             print(count)
                             if string[i] == "X":
-                                result = 'Black'
+                                result = 'black'
                                 self.respond(result)
                                 return
                             if string[i] == "O":
-                                result = 'White'
+                                result = 'white'
                                 self.respond(result)
                                 return
                             break
@@ -341,11 +341,11 @@ class GtpConnection():
                         print("AD", count, string[j],j,string[i],i)
                         if(count == 5):
                             if string[i] == "X":
-                                result = 'Black'
+                                result = 'black'
                                 self.respond(result)
                                 return
                             if string[i] == "O":
-                                result = 'White'
+                                result = 'white'
                                 self.respond(result)
                                 return
                             break
@@ -358,7 +358,7 @@ class GtpConnection():
             self.respond(result)
             return
         else:
-            result = 'DRAW'    
+            result = 'draw'    
             self.respond(result)
             return
     def play_cmd(self, args):
@@ -416,11 +416,16 @@ class GtpConnection():
         move_as_string = format_point(move_coord)
         print(str(self.board.get_empty_points()))
         #print("test here last" + str(move_as_string))
-        if self.board.is_legal(move, color):
-            self.board.play_move(move, color)
-            self.respond(move_as_string)
+        if self.gogui_rules_legal_moves_cmd != '':
+            if self.board.is_legal(move, color):
+                self.board.play_move(move, color)
+                self.respond(move_as_string)
+            else:
+                self.respond("Illegal move: {}".format(move_as_string))
+        elif self.gogui_rules_final_result_cmd == 'white' or self.gogui_rules_final_result_cmd == 'black':
+            self.respond("resign")
         else:
-            self.respond("Illegal move: {}".format(move_as_string))
+            self.respond("pass")
 
     """
     ==========================================================================
