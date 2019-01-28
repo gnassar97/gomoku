@@ -218,7 +218,8 @@ class GtpConnection():
                     #str += '.'
                     point = self.board.board[start + i]
                     if point == EMPTY:
-                        string = string + " " + str(chr(row+96+1)) +str(i+1) 
+                        string = string + " " + str(chr(i+96+1)) +str(row+1)
+                        print(string) 
             string = string.split(" ")
             string = sorted(string)
             
@@ -315,7 +316,6 @@ class GtpConnection():
         for i in range(len(string)):
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+(4*(size+1)) <= size*size-1):
-                   
                     for j in range(i,i+5*(size+1),size+1):
                         print("DIAG", count)
                         if(count == 5):
@@ -337,8 +337,8 @@ class GtpConnection():
             
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+(4*(size-1)) <= size*size-1):
-                    for j in range(i,i+5*(size-1),size-1):
-                        print("AD", count)
+                    for j in range(i,i+4*(size-1),size-1):
+                        print("AD", count, string[j],j,string[i],i)
                         if(count == 5):
                             if string[i] == "X":
                                 result = 'Black'
