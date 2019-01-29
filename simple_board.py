@@ -174,8 +174,8 @@ class SimpleGoBoard(object):
         oppColor = GoBoardUtil.opponent(color)
         #print(str(self.current_player))
         #print(str(oppColor))
-        if self.current_player == oppColor:
-            return False
+        #if self.current_player == oppColor:
+            #return False
         if self.board[point] != EMPTY:
             return False
 
