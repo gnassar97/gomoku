@@ -280,18 +280,19 @@ class GtpConnection():
                 if(string[i] == 'X' or string[i] == 'O'):
                     for j in range(i+size, i+size*5,size):
                         print(count, "COL")
-                        if count == 5:
-                            if string[i] == "X":
-                                result = 'black'
-                                self.respond(result)
-                                return
-                            if string[i] == "O":
-                                result = 'white'
-                                self.respond(result)
-                                return
-                            break
                         if (string[i] == string[j]):
                             count = count + 1
+                            if(count == 5):
+                                print(count)
+                                if string[i] == "X":
+                                    result = 'black'
+                                    self.respond(result)
+                                    return
+                                if string[i] == "O":
+                                    result = 'white'
+                                    self.respond(result)
+                                    return
+                                break                            
                     count = 1
         ##ROW TEST                
         for i in range(len(string)):
@@ -300,58 +301,60 @@ class GtpConnection():
                     for j in range(i+1,i+5,1):
                         print(j, i)
                         print(count, "ROW")
-                        if(count == 5):
-                            if string[i] == "X":
-                                result = 'black'
-                                self.respond(result)
-                                return
-                            if string[i] == "O":
-                                result = 'white'
-                                self.respond(result)
-                                return
-                            break
                         if(string[i] == string[j]):
                             count = count + 1
+                            if(count == 5):
+                                print(count)
+                                if string[i] == "X":
+                                    result = 'black'
+                                    self.respond(result)
+                                    return
+                                if string[i] == "O":
+                                    result = 'white'
+                                    self.respond(result)
+                                    return
+                                break
                     count = 1        
         #DIAG TEST         
         for i in range(len(string)):
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+(4*(size+1)) <= size*size-1):
-                    for j in range(i,i+5*(size+1),size+1):
+                    for j in range(i+size+1,i+5*(size+1),size+1):
                         print("DIAG", count)
-                        if(count == 5):
-                            print(count)
-                            if string[i] == "X":
-                                result = 'black'
-                                self.respond(result)
-                                return
-                            if string[i] == "O":
-                                result = 'white'
-                                self.respond(result)
-                                return
-                            break
                         if(string[i] == string[j]):
                             count = count + 1
+                            if(count == 5):
+                                print(count)
+                                if string[i] == "X":
+                                    result = 'black'
+                                    self.respond(result)
+                                    return
+                                if string[i] == "O":
+                                    result = 'white'
+                                    self.respond(result)
+                                    return
+                                break
                     count = 1
         #ANTI-DIAG TEST.
         for i in range(len(string)):
             
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+(4*(size-1)) <= size*size-1):
-                    for j in range(i,i+4*(size-1),size-1):
+                    for j in range(i+size-1,i+5*(size-1),size-1):
                         print("AD", count, string[j],j,string[i],i)
-                        if(count == 5):
-                            if string[i] == "X":
-                                result = 'black'
-                                self.respond(result)
-                                return
-                            if string[i] == "O":
-                                result = 'white'
-                                self.respond(result)
-                                return
-                            break
                         if(string[i] == string[j]):
                             count = count + 1
+                            if(count == 5):
+                                print(count)
+                                if string[i] == "X":
+                                    result = 'black'
+                                    self.respond(result)
+                                    return
+                                if string[i] == "O":
+                                    result = 'white'
+                                    self.respond(result)
+                                    return
+                                break                            
                     count = 1
         #DRAW--
         if "." in string:
