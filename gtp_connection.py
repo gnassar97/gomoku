@@ -283,7 +283,7 @@ class GtpConnection():
                         if (string[i] == string[j]):
                             count = count + 1
                             if(count == 5):
-                                print(count)
+                                #print(count)
                                 if string[i] == "X":
                                     result = 'black'
                                     self.respond(result)
@@ -304,7 +304,7 @@ class GtpConnection():
                         if(string[i] == string[j]):
                             count = count + 1
                             if(count == 5):
-                                print(count)
+                                #print(count)
                                 if string[i] == "X":
                                     result = 'black'
                                     self.respond(result)
@@ -324,7 +324,7 @@ class GtpConnection():
                         if(string[i] == string[j]):
                             count = count + 1
                             if(count == 5):
-                                print(count)
+                                #print(count)
                                 if string[i] == "X":
                                     result = 'black'
                                     self.respond(result)
@@ -345,7 +345,7 @@ class GtpConnection():
                         if(string[i] == string[j]):
                             count = count + 1
                             if(count == 5):
-                                print(count)
+                                #print(count)
                                 if string[i] == "X":
                                     result = 'black'
                                     self.respond(result)
