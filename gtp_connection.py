@@ -279,79 +279,82 @@ class GtpConnection():
             if i + size*4 < size*size-1:
                 if(string[i] == 'X' or string[i] == 'O'):
                     for j in range(i+size, i+size*5,size):
-                        print(count, "COL")
-                        if count == 5:
-                            if string[i] == "X":
-                                result = 'black'
-                                self.respond(result)
-                                return
-                            if string[i] == "O":
-                                result = 'white'
-                                self.respond(result)
-                                return
-                            break
-                        if (string[i] == string[j]):
+                        #print(count, "COL")
+                        if(string[i] == string[j]):
                             count = count + 1
+                        else:
+                            break
+                    if(count == 5):
+                        if string[i] == "X":
+                            result = 'black'
+                            self.respond(result)
+                            return
+                        if string[i] == "O":
+                            result = 'white'
+                            self.respond(result)
+                            return
                     count = 1
         ##ROW TEST                
         for i in range(len(string)):
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+4 < size*size -1 and i%size + 4 <  size):
                     for j in range(i+1,i+5,1):
-                        print(j, i)
-                        print(count, "ROW")
-                        if(count == 5):
-                            if string[i] == "X":
-                                result = 'black'
-                                self.respond(result)
-                                return
-                            if string[i] == "O":
-                                result = 'white'
-                                self.respond(result)
-                                return
-                            break
+                        #print(j, i)
+                        #print(count, "ROW")
                         if(string[i] == string[j]):
                             count = count + 1
-                    count = 1        
+                        else:
+                            break
+                    if(count == 5):
+                        if string[i] == "X":
+                            result = 'black'
+                            self.respond(result)
+                            return
+                        if string[i] == "O":
+                            result = 'white'
+                            self.respond(result)
+                            return
+                    count = 1       
         #DIAG TEST         
         for i in range(len(string)):
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+(4*(size+1)) <= size*size-1):
-                    for j in range(i,i+5*(size+1),size+1):
-                        print("DIAG", count)
-                        if(count == 5):
-                            print(count)
-                            if string[i] == "X":
-                                result = 'black'
-                                self.respond(result)
-                                return
-                            if string[i] == "O":
-                                result = 'white'
-                                self.respond(result)
-                                return
-                            break
+                    for j in range(i+size+1,i+5*(size+1),size+1):
+                        #print("DIAG", count)
                         if(string[i] == string[j]):
                             count = count + 1
+                        else:
+                            break
+                    if(count == 5):
+                        if string[i] == "X":
+                            result = 'black'
+                            self.respond(result)
+                            return
+                        if string[i] == "O":
+                            result = 'white'
+                            self.respond(result)
+                            return
                     count = 1
         #ANTI-DIAG TEST.
         for i in range(len(string)):
             
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+(4*(size-1)) <= size*size-1):
-                    for j in range(i,i+4*(size-1),size-1):
-                        print("AD", count, string[j],j,string[i],i)
-                        if(count == 5):
-                            if string[i] == "X":
-                                result = 'black'
-                                self.respond(result)
-                                return
-                            if string[i] == "O":
-                                result = 'white'
-                                self.respond(result)
-                                return
-                            break
+                    for j in range(i+size-1,i+5*(size-1),size-1):
+                        #print("AD", count, string[j],j,string[i],i)                            
                         if(string[i] == string[j]):
                             count = count + 1
+                        else:
+                            break
+                    if(count == 5):
+                        if string[i] == "X":
+                            result = 'black'
+                            self.respond(result)
+                            return
+                        if string[i] == "O":
+                            result = 'white'
+                            self.respond(result)
+                            return
                     count = 1
         #DRAW--
         if "." in string:
@@ -371,18 +374,18 @@ class GtpConnection():
             board_color = args[0].lower()
             board_move = args[1].lower()
             color = color_to_int(board_color)
-            last_color = GoBoardUtil.opponent(color)
+            #last_color = GoBoardUtil.opponent(color)
             #No Pass in GOMOKU?
             if args[1].lower() == 'pass':
                 self.board.play_move(PASS, color)
                 self.board.current_player = GoBoardUtil.opponent(color)
                 self.respond()
                 return
-            if self.board.current_player != last_color:
+            if self.board.current_player == BLACK or WHITE :
             	coord = move_to_coord(args[1], self.board.size)
             	if coord:
             		move = coord_to_point(coord[0],coord[1], self.board.size)
-            	last_color = self.board.current_player 
+            	#last_color = self.board.current_player 
             else:
             	self.respond('illegal Move: "{}" wrong color'.format(board_move))
             	return
@@ -404,6 +407,11 @@ class GtpConnection():
     def genmove_cmd(self, args):
         """ Modify this function for Assignment 1 """
         """ generate a move for color args[0] in {'b','w'} """
+        result = self.gogui_rules_final_result_cmd(args)
+        if result == 'white' or result == 'black':
+            print("Resign")
+            return
+            
         board_color = args[0].lower()
         color = color_to_int(board_color)
         #print("test before")
@@ -412,16 +420,14 @@ class GtpConnection():
         move_coord = point_to_coord(move, self.board.size)
         #print("test here as well" + str(move_coord))
         move_as_string = format_point(move_coord)
-        print(str(self.board.get_empty_points()))
         #print("test here last" + str(move_as_string))
+        
         if(len(self.board.get_empty_points()) == 1):
             if self.board.is_legal(move, color):
                 self.board.play_move(move, color)
                 self.respond(move_as_string)
             else:
                 self.respond("Illegal move: {}".format(move_as_string))
-        elif self.gogui_rules_final_result_cmd == 'white' or self.gogui_rules_final_result_cmd == 'black':
-            self.respond("resign")
         else:
             self.respond("pass")
 
