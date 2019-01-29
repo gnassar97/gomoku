@@ -382,16 +382,16 @@ class GtpConnection():
                 self.respond()
                 return
             if self.board.current_player == BLACK or WHITE :
-            	coord = move_to_coord(args[1], self.board.size)
-            	if coord :
-            		move = coord_to_point(coord[0],coord[1], self.board.size)
-            	else:
-            		self.respond('illegal move: "{}" wrong coordinate'.format(board_move))
-            		return
+                coord = move_to_coord(args[1], self.board.size)
+                if coord :
+                    move = coord_to_point(coord[0],coord[1], self.board.size)
+                else:
+                    self.respond('illegal move: "{}" wrong coordinate'.format(board_move))
+                    return
             else:
-            	self.respond('illegal move: "{}" wrong color'.format(board_move))
-            	return
-            	               
+                self.respond('illegal move: "{}" wrong color'.format(board_move))
+                return
+                               
             #else:
                 #self.error("Error executing move {} converted from {}"
                            #.format(move, args[1]))
