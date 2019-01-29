@@ -409,11 +409,6 @@ class GtpConnection():
     def genmove_cmd(self, args):
         """ Modify this function for Assignment 1 """
         """ generate a move for color args[0] in {'b','w'} """
-        result = self.gogui_rules_final_result_cmd(self)
-        print(result)
-        if(result == 'black' or result == 'white'):
-            self.respond("resign")
-            return
         board_color = args[0].lower()
         color = color_to_int(board_color)
         #print("test before")
