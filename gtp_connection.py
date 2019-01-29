@@ -371,18 +371,18 @@ class GtpConnection():
             board_color = args[0].lower()
             board_move = args[1].lower()
             color = color_to_int(board_color)
-            last_color = GoBoardUtil.opponent(color)
+            #last_color = GoBoardUtil.opponent(color)
             #No Pass in GOMOKU?
             if args[1].lower() == 'pass':
                 self.board.play_move(PASS, color)
                 self.board.current_player = GoBoardUtil.opponent(color)
                 self.respond()
                 return
-            if self.board.current_player != last_color:
+            if self.board.current_player == BLACK or WHITE :
             	coord = move_to_coord(args[1], self.board.size)
             	if coord:
             		move = coord_to_point(coord[0],coord[1], self.board.size)
-            	last_color = self.board.current_player 
+            	#last_color = self.board.current_player 
             else:
             	self.respond('illegal Move: "{}" wrong color'.format(board_move))
             	return
