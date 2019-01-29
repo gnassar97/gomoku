@@ -279,7 +279,7 @@ class GtpConnection():
             if i + size*4 < size*size-1:
                 if(string[i] == 'X' or string[i] == 'O'):
                     for j in range(i+size, i+size*5,size):
-                        print(count, "COL")
+                        #print(count, "COL")
                         if (string[i] == string[j]):
                             count = count + 1
                             if(count == 5):
@@ -287,11 +287,11 @@ class GtpConnection():
                                 if string[i] == "X":
                                     result = 'black'
                                     self.respond(result)
-                                    return
+                                    return(result)
                                 if string[i] == "O":
                                     result = 'white'
                                     self.respond(result)
-                                    return
+                                    return(result)
                                 break                            
                     count = 1
         ##ROW TEST                
@@ -299,8 +299,8 @@ class GtpConnection():
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+4 < size*size -1 and i%size + 4 <  size):
                     for j in range(i+1,i+5,1):
-                        print(j, i)
-                        print(count, "ROW")
+                        #print(j, i)
+                        #print(count, "ROW")
                         if(string[i] == string[j]):
                             count = count + 1
                             if(count == 5):
@@ -308,11 +308,11 @@ class GtpConnection():
                                 if string[i] == "X":
                                     result = 'black'
                                     self.respond(result)
-                                    return
+                                    return(result)
                                 if string[i] == "O":
                                     result = 'white'
                                     self.respond(result)
-                                    return
+                                    return(result)
                                 break
                     count = 1        
         #DIAG TEST         
@@ -320,7 +320,7 @@ class GtpConnection():
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+(4*(size+1)) <= size*size-1):
                     for j in range(i+size+1,i+5*(size+1),size+1):
-                        print("DIAG", count)
+                        #print("DIAG", count)
                         if(string[i] == string[j]):
                             count = count + 1
                             if(count == 5):
@@ -328,11 +328,11 @@ class GtpConnection():
                                 if string[i] == "X":
                                     result = 'black'
                                     self.respond(result)
-                                    return
+                                    return(result)
                                 if string[i] == "O":
                                     result = 'white'
                                     self.respond(result)
-                                    return
+                                    return(result)
                                 break
                     count = 1
         #ANTI-DIAG TEST.
@@ -341,7 +341,7 @@ class GtpConnection():
             if (string[i] == 'X' or string[i] == "O"):
                 if(i+(4*(size-1)) <= size*size-1):
                     for j in range(i+size-1,i+5*(size-1),size-1):
-                        print("AD", count, string[j],j,string[i],i)
+                        #print("AD", count, string[j],j,string[i],i)
                         if(string[i] == string[j]):
                             count = count + 1
                             if(count == 5):
@@ -349,22 +349,22 @@ class GtpConnection():
                                 if string[i] == "X":
                                     result = 'black'
                                     self.respond(result)
-                                    return
+                                    return(result)
                                 if string[i] == "O":
                                     result = 'white'
                                     self.respond(result)
-                                    return
+                                    return(result)
                                 break                            
                     count = 1
         #DRAW--
         if "." in string:
             result = 'unknown'
             self.respond(result)
-            return
+            return(result)
         else:
             result = 'draw'    
             self.respond(result)
-            return
+            return(result)
     def play_cmd(self, args):
         """ Modify this function for Assignment 1 """
         """
@@ -382,16 +382,16 @@ class GtpConnection():
                 self.respond()
                 return
             if self.board.current_player == BLACK or WHITE :
-                coord = move_to_coord(args[1], self.board.size)
-                if coord :
-                    move = coord_to_point(coord[0],coord[1], self.board.size)
-                else:
-                    self.respond('illegal move: "{}" wrong coordinate'.format(board_move))
-                    return
+            	coord = move_to_coord(args[1], self.board.size)
+            	if coord :
+            		move = coord_to_point(coord[0],coord[1], self.board.size)
+            	else:
+            		self.respond('illegal move: "{}" wrong coordinate'.format(board_move))
+            		return
             else:
-                self.respond('illegal move: "{}" wrong color'.format(board_move))
-                return
-                               
+            	self.respond('illegal move: "{}" wrong color'.format(board_move))
+            	return
+            	               
             #else:
                 #self.error("Error executing move {} converted from {}"
                            #.format(move, args[1]))
@@ -409,6 +409,11 @@ class GtpConnection():
     def genmove_cmd(self, args):
         """ Modify this function for Assignment 1 """
         """ generate a move for color args[0] in {'b','w'} """
+        result = self.gogui_rules_final_result_cmd(self)
+        print(result)
+        if(result == 'black' or result == 'white'):
+            self.respond("resign")
+            return
         board_color = args[0].lower()
         color = color_to_int(board_color)
         #print("test before")
@@ -425,7 +430,7 @@ class GtpConnection():
                 self.respond(move_as_string)
             else:
                 self.respond("Illegal move: {}".format(move_as_string))
-        elif self.gogui_rules_final_result_cmd == 'white' or self.gogui_rules_final_result_cmd == 'black':
+        elif self.gogui_rules_final_result == 'white' or self.gogui_rules_final_result == 'black':
             self.respond("resign")
         else:
             self.respond("pass")
